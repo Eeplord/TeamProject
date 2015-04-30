@@ -4,14 +4,14 @@ LDFLAGS = -lm
 
 all : run
 
-run : main.o account.o
-	$(CC) $(CFLAGS) account.o main.o $(LDFLAGS) -o run
+run : Main.o Account.o
+	$(CC) $(CFLAGS) Account.o Main.o $(LDFLAGS) -o run
 
-account.o : account.cpp account.h
-	$(CC) $(CFLAGS) -c account.cpp
+Account.o : Account.cpp Account.h
+	$(CC) $(CFLAGS) -c Account.cpp
 
-main.o : main.cpp account.h
-	$(CC) $(CFLAGS) -c main.cpp
+Main.o : Main.cpp Account.h
+	$(CC) $(CFLAGS) -c Main.cpp
 
 clean:
-	rm run account.o main.o
+	rm run Account.o Main.o
