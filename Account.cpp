@@ -54,24 +54,3 @@ double Account::calculateInterest()
   balance_ += monthlyInterest;
   return balance_;
 }
-
-void Account::saveToFile(std::string filename)
-{
-  std::ofstream file(filename.c_str());
-  file.put('H');  
-  file.close();
-}
-
-void Account::loadFromFile(std::string filename)
-{
-
-}
-
-void writeLine(std::ofstream file, std::string key, std::string value)
-{
-  // Convert key and value into char arrays
-  // Parse key in by char
-  // Parse " : " in
-  // Parse value in by char
-  // Parse '\n'
-}
