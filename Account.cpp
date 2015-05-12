@@ -34,6 +34,7 @@ int Account::getNumWithdraws(){
 
 // Adds money to balance and returns current balance
 double Account::deposit(double deposit) {
+
   // Deposits has to be positive.
   if (deposit <= 0)
     throw invalid_argument("Deposit amount cannot be zero or negative.");
@@ -45,6 +46,7 @@ double Account::deposit(double deposit) {
 
 // Subtracts money from balance and returns current balance
 double Account::withdraw(double withdraw) {
+
   // Withdraws must be less than amount available
   if (balance_ - withdraw < 0)
     throw invalid_argument("Withdraw amount cannot result in negative balance.");
