@@ -2,9 +2,6 @@
 // Author: Cameron March
 
 #include "Storage.h"
-#include <fstream>
-#include <string>
-#include <vector>
 
 Storage::Storage(std::string filename) : filename_(filename) {
 
@@ -14,14 +11,15 @@ Storage::Storage(std::string filename) : filename_(filename) {
 // Save an account into the data file.
 void Storage::save(Account account) {
 	std::ofstream accounts;
-	accounts.open(filename_);
+
+	accounts.open(filename_.c_str());
 
 	/** Account entries are in this format:
 	*	@<Account ID>,<Account Owner Name>,<Balance>,<Annual Interest Rate>,<nDeposits>,<nWithdraws>
 	*/
-	accounts << "@" << account.ownerId_ << ',' << account.ownerName_ << ',' << account.balance_;
-	accounts << ',' << account.annualInterestRate_ << ',' << account.nDeposits_ << ',' << account.nWithdraws_;
-	accounts << std::endl;
+	accounts << "@" << account.getId() << ',' << account.getName() <<
+		',' << account.getBalance() << ',' << account.getInterestRate() << ',' <<
+		account.getNumDeposits() << ',' << account.getNumWithdraws() << std::endl;
 
 	accounts.close();
 }
@@ -31,7 +29,7 @@ void Storage::save(Account account) {
 Account Storage::load(std::string accountId) {
   std::string line;
   std::ifstream accounts;
-  accounts.open(filename_);
+  accounts.open(filename_.c_str());
 
   std::vector<std::string> accountData;
 
@@ -73,7 +71,7 @@ std::vector<std::string> split(std::string str, char delim = ',') {
 	
 	// Adds the last element to splitted (Assumes str doesn't end in delimitter).
 	substr = str.substr(current, str.length() - 1);
-	splited.push_back()
+	splitted.push_back();
 
 	return splitted;
 }

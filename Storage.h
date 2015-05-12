@@ -5,7 +5,9 @@
 #define STORAGE_H
 
 #include <cstring>
+#include <iostream>
 #include <fstream>
+#include <vector>
 #include "Account.h"
 
 // Storage will handle the persistent data required for our project.

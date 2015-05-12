@@ -9,12 +9,23 @@ Account::Account(double startingBalance, double annualInterestRate) {
   
   // Starting balance has to be positive.
   if (startingBalance < 0)
-    throw invalid_argument("Starting balance cannot be negative.");
+    throw std::invalid_argument("Starting balance cannot be negative.");
 
   balance_ = startingBalance;
   annualInterestRate_ = annualInterestRate;
   nDeposits_ = 0;
   nWithdraws_ = 0;
+}
+
+Account::Account(int id, std::string name, double startingBalance,
+	double annualInterestRate, double nDeposits, double nWithdraws) {
+
+	id_ = id;
+	name_ = name;
+	balance_ = startingBalance;
+	annualInterestRate_ = annualInterestRate;
+	nDeposits_ = nDeposits;
+	nWithdraws_ = nWithdraws;
 }
 
 // Returns current balance
@@ -32,12 +43,27 @@ int Account::getNumWithdraws(){
   return nWithdraws_;
 }
 
+// Returns account number
+int Account::getId(){
+  return id_;
+}
+
+// Returns name of account owner
+std::string Account::getName(){
+  return name_;
+}
+
+// Returns interest rate
+double Account::getInterestRate(){
+  return annualInterestRate_;
+}
+
 // Adds money to balance and returns current balance
 double Account::deposit(double deposit) {
 
   // Deposits has to be positive.
   if (deposit <= 0)
-    throw invalid_argument("Deposit amount cannot be zero or negative.");
+    throw std::invalid_argument("Deposit amount cannot be zero or negative.");
 
   balance_ += deposit;
   nDeposits_++;
@@ -49,7 +75,7 @@ double Account::withdraw(double withdraw) {
 
   // Withdraws must be less than amount available
   if (balance_ - withdraw < 0)
-    throw invalid_argument("Withdraw amount cannot result in negative balance.");
+    throw std::invalid_argument("Withdraw amount cannot result in negative balance.");
 
   balance_ -= withdraw;
   nWithdraws_++;
