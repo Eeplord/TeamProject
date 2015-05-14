@@ -1,5 +1,5 @@
 // Account.cpp
-// Author: Cameron March
+// Authors: Cameron March, Tuan Phan
 
 #include "Account.h"
 
@@ -15,6 +15,8 @@ Account::Account(double startingBalance, double annualInterestRate) {
   annualInterestRate_ = annualInterestRate;
   nDeposits_ = 0;
   nWithdraws_ = 0;
+  id_ = 0;
+  name_ = "null";
 }
 
 Account::Account(int id, std::string name, double startingBalance,

@@ -1,5 +1,5 @@
 // Storage.h
-// Author: Cameron March
+// Authors: Cameron March, Tuan Phan
 
 #ifndef STORAGE_H
 #define STORAGE_H
@@ -22,7 +22,10 @@ class Storage
   // Constructor
   Storage(std::string filename);
 
-  // I/O Methods
+  // I/O Methods (these functions might want to be static and
+  // take filenames as parameters, so we don't have to instantiate
+  // this object multiple times or constantly change its stored
+  // file. For right now I will leave them as is)
   void save(Account account);
   Account load();
 

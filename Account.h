@@ -1,5 +1,5 @@
 // Account.h
-// Author: Cameron March
+// Authors: Cameron March, Tuan Phan
 
 #ifndef ACCOUNT_H
 #define ACCOUNT_H

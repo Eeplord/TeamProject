@@ -11,13 +11,11 @@ const double ANNUAL_INTEREST_RATE = 2.3;
 
 int main() 
 {
-  Account me(STARTING_BALANCE, ANNUAL_INTEREST_RATE);
+	Account account(STARTING_BALANCE, ANNUAL_INTEREST_RATE);
 
-  std::cout << me.getBalance() << std::endl;
+	Storage storage("deleteMe.txt");
 
-  Storage storage("filename.txt");
+	storage.save(account);
 
-  me = storage.load();
-
-  std::cout << me.getBalance() << std::endl;
+	return 0;
 }
