@@ -61,14 +61,14 @@
 // Back End Scheme //
 /////////////////////
 
--New account creates a new folder and corresponding files 
+-New account creates a new folder and corresponding files
  for withdrawl and deposit information related to account.
 
 -Loading an account requires an id. The program then uses
  that id to find the correct folder and opens the account
  file for that id. The program then creates a new account
  object which holds the id of the account, the name of the
- owner, the balance, the annual interest, a pointer to the 
+ owner, the balance, the annual interest, a pointer to the
  deposits stack, a pointer to the withdrawal stack, the
  path to withdrawals data, and the path to deposits data.
 
@@ -90,6 +90,16 @@
 -When a user makes a withdraw, the programs calculates the
  new balance and saves a new entry of withdrawal into the
  withdrawals data file.
+
+//////////
+// Main //
+//////////
+
+-Creates a UI.
+-Loads a file containing a list of ids.
+-Add to that list when a new account is created.
+-Search that list and load appropriate account when asked.
+-Perform read/write tasks.
 
 /////////////
 // Classes //
@@ -120,11 +130,11 @@ private:
 	// Path to deposits information
 	std::string depositDataPath_;
 
-	// Withdrawals
-	std::stack<Withdrawals> withdrawals_;
+	// Pointer to Withdrawals
+	std::stack<Withdrawals> *withdrawals_;
 
-	// Deposits
-	std::stack<Deposits> deposits_;
+	// Pointer to Deposits
+	std::stack<Deposits> *deposits_;
 
 	// Saves the account into an encrypted txt file
 	void save();
@@ -134,7 +144,7 @@ private:
 
 
 public:
-	
+
 	// TODO: Constructors
 
 	// Returns the id_ of the account
@@ -185,7 +195,7 @@ private:
 	int id_;
 
 public:
-	
+
 	// Set id_ = idGenerator++ everytime it's called
 	Id();
 
@@ -203,7 +213,7 @@ private:
 	std::string lastName_;
 
 public:
-	
+
 	// Takes a full name and parse for first and last name
 	Name(std::string fullName);
 
@@ -235,7 +245,7 @@ private:
 	double balance_;
 
 public:
-	
+
 	// Initializes balance to arg
 	Balance(double amount);
 
