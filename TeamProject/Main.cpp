@@ -8,14 +8,13 @@
 #include "Account.h"
 #include "Storage.h"
 
-const double STARTING_BALANCE = 100.00;
-const double ANNUAL_INTEREST_RATE = 2.3;
-
 int main()
 {
-	Account account(STARTING_BALANCE, ANNUAL_INTEREST_RATE);
+	Storage storage("Load.txt");
 
-	Storage storage("deleteMe.txt");
+	Account account = storage.load();
+
+	storage.changeFile("Save.txt");
 
 	storage.save(account);
 
