@@ -2,7 +2,7 @@
 // Authors: Cameron March, Tuan Phan
 
 // Remove if not using Visual Studio
-// #include "stdafx.h"
+#include "stdafx.h"
 #include "Storage.h"
 
 Storage::Storage(std::string filename) : filename_(filename) {

@@ -2,7 +2,7 @@
 // Author: Cameron March
 
 // Remove if not using Visual Studio
-// #include "stdafx.h"
+#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "Account.h"

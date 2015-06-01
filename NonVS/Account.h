@@ -6,46 +6,61 @@
 
 #include <string>
 #include <stdexcept>
+#include <stack>
+#include <iostream>
+#include <fstream>
 
 // Account simulates a person's bank account. It stores balance,
 // interest rate, charges, and running counts of deposits and withdraws.
 // Money can be withdrawn and deposited, and monthly interest can
 // be applied.
+class Account {
 
-class Account
-{
 public:
 
-	// Constructor
-	Account(double startingBalance, double annualInterestRate);
+	// TODO: Constructors
 
-	Account(int id, std::string name, double startingBalance,
-		double annualInterestRate, double nDeposits, double nWithdraws);
-
-	// Getters
-	double getBalance();
-	int getNumDeposits();
-	int getNumWithdraws();
+	// Returns the id of the account
 	int getId();
+
+	// Returns the name of the owner
 	std::string getName();
+
+	// Returns the balance
+	double getBalance();
+
+	// Returns the interest rate
 	double getInterestRate();
 
-	// Alter balance
-	double deposit(double deposit);
-	double withdraw(double withdraw);
+	// Returns new balance after interest
+	double applyInterest();
 
-	// Calculates monthly interest and adds it to balance
-	double calculateInterest();
+	// Returns number of deposits
+	int getNumDeposits();
+
+	// Returns number of withdrawals
+	int getNumWithdrawals();
+
+	// Returns new balance after deposit
+	double deposit(double amount);
+
+	// Returns new balance after withdraw
+	double withdraw(double amount);
+
+	// Saves the account into an encrypted txt file
+	void save();
+
+	// Loads the account and decrypt
+	void load();
 
 private:
 
-	double balance_;
-	double annualInterestRate_;
-	double charges_;
-	int nDeposits_;
-	int nWithdraws_;
-	int id_;
-	std::string name_;
+	Id id_;									// ID of the account
+	std::string name_;						// Name of owner
+	double balance_;						// Balance
+	double interestRate_;					// Annual interest rate
+	std::stack<Withdrawals> *withdrawals_; 	// Pointer to withdrawls
+	std::stack<Deposits> *deposits_;		// Pointer to deposits
 };
 
 #endif
