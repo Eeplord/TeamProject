@@ -1,6 +1,0 @@
-﻿  Storage.cpp
-  Account.cpp
-e:\education\de anza\cis22b\teamproject\teamproject\account.cpp(31): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-e:\education\de anza\cis22b\teamproject\teamproject\account.cpp(32): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-  TeamProject.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject\Debug\TeamProject.exe

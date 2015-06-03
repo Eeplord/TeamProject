@@ -1,3 +1,2 @@
-﻿  Account.cpp
-e:\education\de anza\cis22b\teamproject2\checkingaccountapp\checkingaccountapp\account.cpp(180): warning C4715: 'Account::find' : not all control paths return a value
-  CheckingAccountApp.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject2\CheckingAccountApp\Debug\CheckingAccountApp.exe
+﻿  stdafx.cpp
+  Main.cpp
