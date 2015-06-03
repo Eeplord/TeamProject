@@ -10,13 +10,14 @@
 void accountMenu(Account *account);
 Account createAccount();
 Account loadAccount();
+void display(Account *account);
+void withdraw(Account *account);
+void deposit(Account *account);
 
 int main()
 {
-	std::string mainCommands =  "[1] Create new Account\n[2] Load Account\n"
+	std::string mainCommands =  "[1] Create New Account\n[2] Load Account\n"
 	"[q] Quit";
-
-	std::string accountCommands = "[1] Withdraw\n[2] Deposit\n[q] Quit";
 
 	bool quit = false;
 	char input;
@@ -57,7 +58,8 @@ int main()
 
 void accountMenu(Account *account)
 {
-	std::string accountCommands = "[1] Withdraw\n[2] Deposit\n[q] Quit";
+	std::string accountCommands = "[1] Show Account Information\n"
+		"[2] Withdraw\n[3] Deposit\n[q] Logout";
 
 	bool quit = false;
 	char input;
@@ -69,11 +71,16 @@ void accountMenu(Account *account)
 
 		switch(input)
 		{
-
 			case '1':
+				display(account);
 				break;
 
 			case '2':
+				withdraw(account);
+				break;
+
+			case '3':
+				deposit(account);
 				break;
 
 			case 'q':
@@ -123,4 +130,40 @@ Account loadAccount()
 	Account account(id);
 	account.load();
 	return account;
+}
+
+void withdraw(Account *account)
+{
+	double amount;
+
+	std::cout << "Amount to withdraw: ";
+	std::cin >> amount;
+
+	double balance = account->withdraw(amount);
+
+	std::cout << "Current balance: " << balance << std::endl;
+
+	account->save();
+}
+
+void deposit(Account *account)
+{
+	double amount;
+
+	std::cout << "Amount to deposit: ";
+	std::cin >> amount;
+
+	double balance = account->deposit(amount);
+
+	std::cout << "Current balance: " << balance << std::endl;
+
+	account->save();
+}
+
+void display(Account *account)
+{
+	std::cout << "ID: " << account->getId() << std::endl;
+	std::cout << "Name: " << account->getName() << std::endl;
+	std::cout << "Balance: " << account->getBalance() << std::endl;
+	std::cout << "Interest Rate: " << account->getInterestRate() << std::endl;
 }

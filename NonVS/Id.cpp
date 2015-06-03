@@ -14,7 +14,7 @@ int Id::getId()
 	return id_;
 }
 
-void Id:setId(int id)
+void Id::setId(int id)
 {
 	id_ = id;
 }

@@ -10,12 +10,14 @@
 #include <iostream>
 #include <fstream>
 
+#include "Id.h"
+
 // Account simulates a person's bank account. It stores balance,
 // interest rate, charges, and running counts of deposits and withdraws.
 // Money can be withdrawn and deposited, and monthly interest can
 // be applied.
-class Account {
-
+class Account
+{
 public:
 
 	// TODO: Constructors

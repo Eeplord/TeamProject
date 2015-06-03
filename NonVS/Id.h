@@ -13,7 +13,7 @@ public:
 	// Returns id
 	int getId();
 
-	void setID(int id);
+	void setId(int id);
 
 private:
 
