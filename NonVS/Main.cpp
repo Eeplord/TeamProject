@@ -8,15 +8,60 @@
 #include "Account.h"
 #include "Storage.h"
 
+Account createAccount();
+
 int main()
 {
-	Storage storage("Load.txt");
+	std::string commands =  "[1] Create new Account\n[2] Load Account\n"
+				"[q] Quit";
+	bool quit = false;
+	char input;
 
-	Account account = storage.load();
+	while(!quit) {
 
-	storage.changeFile("Save.txt");
+		std::cout <<  commands << std::endl;
+		std::cin >> input;
 
-	storage.save(account);
+		switch(input) {
+
+			case '1':
+				createAccount();
+				break;
+
+			case '2':
+				std::cout << input << std::endl;
+				break;
+
+			case 'q':
+				std::cout << input << std::endl;
+				quit = true;
+				break;
+
+			default:
+				std::cout << input <<
+					" is not a recognized command"
+					<< std::endl;
+				break;
+		}
+	}
 
 	return 0;
+}
+
+Account createAccount() {
+
+	std::string name;
+	double balance;
+	double interest;
+
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+
+	std::cout << "Enter starting balance: ";
+	std::cin >> balance;
+
+	std::cout << "Enter annual interest rate: ";
+	std::cin interest;
+
+	
 }
