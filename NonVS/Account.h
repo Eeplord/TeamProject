@@ -19,6 +19,9 @@ class Account {
 public:
 
 	// TODO: Constructors
+	Account(int id, std::string name, double balance, double interestRate);
+
+	Account(int id);
 
 	// Returns the id of the account
 	int getId();
@@ -55,12 +58,12 @@ public:
 
 private:
 
-	Id id_;									// ID of the account
+	int id_;									// ID of the account
 	std::string name_;						// Name of owner
 	double balance_;						// Balance
 	double interestRate_;					// Annual interest rate
-	std::stack<Withdrawals> *withdrawals_; 	// Pointer to withdrawls
-	std::stack<Deposits> *deposits_;		// Pointer to deposits
+	//std::stack<Withdrawals> *withdrawals_; 	// Pointer to withdrawls
+	//std::stack<Deposits> *deposits_;		// Pointer to deposits
 };
 
 #endif

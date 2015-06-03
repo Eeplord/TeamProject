@@ -2,45 +2,52 @@
 // Author: Cameron March
 
 // Remove if not using Visual Studio
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <iostream>
 #include <string>
 #include "Account.h"
-#include "Storage.h"
 
+void accountMenu(Account *account);
 Account createAccount();
+Account loadAccount();
 
 int main()
 {
-	std::string commands =  "[1] Create new Account\n[2] Load Account\n"
-				"[q] Quit";
+	std::string mainCommands =  "[1] Create new Account\n[2] Load Account\n"
+	"[q] Quit";
+
+	std::string accountCommands = "[1] Withdraw\n[2] Deposit\n[q] Quit";
+
 	bool quit = false;
 	char input;
+	Account account(0);
 
-	while(!quit) {
+	while(!quit)
+	{
 
-		std::cout <<  commands << std::endl;
+		std::cout << mainCommands << std::endl;
 		std::cin >> input;
 
-		switch(input) {
+		switch(input)
+		{
 
 			case '1':
-				createAccount();
+				account = createAccount();
+				accountMenu(&account);
 				break;
 
 			case '2':
-				std::cout << input << std::endl;
+				account = loadAccount();
+				accountMenu(&account);
 				break;
 
 			case 'q':
-				std::cout << input << std::endl;
 				quit = true;
 				break;
 
 			default:
-				std::cout << input <<
-					" is not a recognized command"
-					<< std::endl;
+				std::cout << input << " is not a recognized command" <<
+				std::endl;
 				break;
 		}
 	}
@@ -48,11 +55,49 @@ int main()
 	return 0;
 }
 
-Account createAccount() {
+void accountMenu(Account *account)
+{
+	std::string accountCommands = "[1] Withdraw\n[2] Deposit\n[q] Quit";
 
+	bool quit = false;
+	char input;
+
+	while(!quit)
+	{
+		std::cout << accountCommands << std::endl;
+		std::cin >> input;
+
+		switch(input)
+		{
+
+			case '1':
+				break;
+
+			case '2':
+				break;
+
+			case 'q':
+				quit = true;
+				break;
+
+			default:
+				std::cout << input << " is not a recognized command" <<
+				std::endl;
+				break;
+		}
+	}
+}
+
+Account createAccount()
+{
+
+	int id;
 	std::string name;
 	double balance;
 	double interest;
+
+	std::cout << "Enter your id: ";
+	std::cin >> id;
 
 	std::cout << "Enter your name: ";
 	std::cin >> name;
@@ -61,7 +106,21 @@ Account createAccount() {
 	std::cin >> balance;
 
 	std::cout << "Enter annual interest rate: ";
-	std::cin interest;
+	std::cin >> interest;
 
-	
+	Account account(id, name, balance, interest);
+	account.save();
+	return account;
+}
+
+Account loadAccount()
+{
+	int id;
+
+	std::cout << "Enter your id: ";
+	std::cin >> id;
+
+	Account account(id);
+	account.load();
+	return account;
 }
