@@ -3,18 +3,20 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
+#include <iostream>
+#include "Date.h"
+
 class Transaction
 {
 public:
 
-	void printAmount();
-	void printDescription();
-	void printDate();
+	Transaction(Date *date, double amount, std::string description);
 	std::string getEntry();
+	void print();
 
 private:
 
-	Date date_;
+	Date *date_;
 	double amount_;
 	std::string description_;
 };
