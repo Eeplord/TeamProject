@@ -1,13 +1,7 @@
 #ifndef UI_H
 #define UI_H
 
-#include "Account.h"
-// #include "Withdrawal.h"
-// #include "Deposit.h"
-#include <iostream>
-#include <string>
-#include <stdexcept>
-#include <regex>
+#include "stdafx.h"
 
 class Ui {
 private:

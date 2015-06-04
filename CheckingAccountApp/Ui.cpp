@@ -10,46 +10,56 @@ void Ui::start() {
   while (next != "quit") {
     std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 
-    if (next == "createAccount") {
+    if (next == "mainMenu") {
+      next = mainMenu();
+    }
+    else if (next == "accountMenu") {
+      next = accountMenu();
+    }
+    else if (next == "createAccount") {
       username = createAccount();
-      next = "loadAccount";
+      next = "mainMenu";
+      if (username.length() != 0) {
+        next = "loadAccount";
+      }
+
     }
     else if (next == "deleteAccount") {
       deleteAccount();
-      next = mainMenu();
+      next = "mainMenu";
     }
     else if (next == "loadAccount") {
       account = loadAccount(username);
       username = "";
-      next = accountMenu();
+      next = "accountMenu";
       if (account == nullptr) {
         next = "loadAccount";
       }
     }
     else if (next == "updateAccount") {
       updateAccount(account);
-      next = accountMenu();
+      next = "accountMenu";
     }
     else if (next == "getWithdrawals") {
       getWithdrawals(account);
-      next = accountMenu();
+      next = "accountMenu";
     }
     else if (next == "getDeposits") {
       getDeposits(account);
-      next = accountMenu();
+      next = "accountMenu";
     }
     else if (next == "withdraw") {
       withdraw(account);
-      next = accountMenu();
+      next = "accountMenu";
     }
     else if (next == "deposit") {
       deposit(account);
-      next = accountMenu();
+      next = "accountMenu";
     }
     else if (next == "quitAccountMenu") {
       delete account;
       account = nullptr;
-      next = mainMenu();
+      next = "mainMenu";
     }
   }
 }
@@ -100,9 +110,10 @@ std::string Ui::createAccount() {
       std::cout << "The password does not match.\n\n";
     }
   }
-
-  // Account.create(username, password);
-  return username;
+  if (Account::create(username, password)) {
+    return username;
+  }
+  return "";
 }
 
 void Ui::deleteAccount() {
@@ -116,17 +127,17 @@ void Ui::deleteAccount() {
 
   std::cout << "Please enter the username of the account to be deleted.\n";
   username = getUserInput("username");
-  // if (!Account.validate(username)) {
-  //   return;
-  // }
+  if (!Account::validate(username)) {
+    return;
+  }
 
   std::cout << "Please enter password.\n";
   password = getUserInput("password");
-  // if (!Account.authenticate(username, password)) {
-  //   return;
-  // }
+  if (!Account::authenticate(username, password)) {
+    return;
+  }
 
-  // Account.remove(username);
+  Account::remove(username);
 }
 
 Account* Ui::loadAccount(const std::string& username) {
@@ -195,8 +206,8 @@ void Ui::updateAccount(Account* const& account) {
   std::string polar = "no";
   std::string username = account->getUsername();
   std::string oldPassword;
-  std::string newPassword;
-  std::string renewPassword;
+  std::string newPassword = "new";
+  std::string renewPassword = "renew";
 
   std::cout << "\n***\n";
   std::cout << "* UPDATE ACCOUNT INFORMATION\n";
@@ -223,9 +234,9 @@ void Ui::updateAccount(Account* const& account) {
 
   std::cout << "Please enter password.\n";
   oldPassword = getUserInput("password");
-   if (!Account::authenticate(username, oldPassword)) {
-     return;
-   }
+  if (!Account::authenticate(username, oldPassword)) {
+    return;
+  }
 
   while (newPassword != renewPassword) {
     std::cout << "Please enter a new password.\n";

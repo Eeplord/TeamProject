@@ -1,25 +1,19 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-// #include "Withdrawal.h"
-// #include "Deposit.h"
-#include "Id.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <stack>
-#include <iomanip>
+#include "stdafx.h"
 
 class Account {
 private:
-  const static std::string userKeyPath_;
   const static std::string infoPath_;
   const static std::string withdrawalsPath_;
   const static std::string depositsPath_;
+  const static std::string tempPath_;
 
   std::string accountPath_;
+  
 
-  // Id* id_;
+  Id* id_;
   std::string firstName_;
   std::string lastName_;
   std::string username_;
@@ -30,7 +24,7 @@ private:
 
 public:
   const static std::string basePath_;
-  const static std::string userIdPath_;
+  const static std::string userKeyPath_;
 
   // Used for creating output file and parsing it.
   const static char delimiter_;
@@ -74,7 +68,7 @@ public:
 
   // Creates a new Account object with provided information.
   // Argument: username, password.
-  static void create(const std::string&, const std::string&);
+  static bool create(const std::string&, const std::string&);
 
   // Removes all information related to provided username.
   // Argument: username.
@@ -102,6 +96,11 @@ public:
   // Write data to basePath/
   // accountInfo/, withdrawals/, and deposits/
   void save();
+  void saveId(const std::string&);
+  void saveInfo(const std::string&);
+  void saveUserKey(const std::string&);
+  void saveWithdrawals(const std::string&);
+  void saveDeposits(const std::string&);
 
   //////////
   // Getter functions

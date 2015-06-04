@@ -1,3 +1,2 @@
-﻿  Id.cpp
-e:\education\de anza\cis22b\teamproject\checkingaccountapp\id.cpp(26): error C2664: 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> std::basic_string<char,std::char_traits<char>,std::allocator<char>>::substr(unsigned int,unsigned int) const' : cannot convert argument 2 from 'std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>' to 'unsigned int'
-          No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+﻿  LINK : E:\Education\De Anza\CIS22B\TeamProject\Debug\CheckingAccountApp.exe not found or not built by the last incremental link; performing full link
+  CheckingAccountApp.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject\Debug\CheckingAccountApp.exe

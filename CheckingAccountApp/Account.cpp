@@ -3,21 +3,25 @@
 
 // TODO: Replace with correct paths.
 const std::string Account::userKeyPath_ = "userKey.txt";
+const std::string Account::tempPath_ = "temp.txt";
 const std::string Account::basePath_ = "Database/";
-const std::string Account::infoPath_ = "AccountInfo/";
+const std::string Account::infoPath_ = "Account_Info/";
 const std::string Account::withdrawalsPath_ = "Withdrawals/";
 const std::string Account::depositsPath_ = "Deposits/";
-const std::string Account::userIdPath_ = "userId.txt";
 
 const char Account::delimiter_ = ';';
 
 Account::Account(const std::string& username, const std::string& password)
   : username_(username), password_(password) {
-  // id_ = new Id();
-  // accountPath_ = id_->getPath();
+  id_ = new Id();
+  accountPath_ = id_->getPath();
   balance_ = 0;
   firstName_ = "";
   lastName_ = "";
+  save();
+
+  // withdrawals_ = Withdrawal::load(accountPath_);
+  // deposits_ = Deposits::load(accountPath_);
 }
 
 Account::Account(const int& id, const std::string& username,
@@ -26,14 +30,15 @@ Account::Account(const int& id, const std::string& username,
                  const std::string& accountPath)
   : username_(username), password_(password), balance_(balance),
     firstName_(firstName), lastName_(lastName), accountPath_(accountPath) {
-  // id_ = new Id(id);
+  id_ = new Id(id);
+
+  // withdrawals_ = Withdrawal::load(accountPath_);
+  // deposits_ = Deposits::load(accountPath_);
 }
 
 // TODO: Finish destructor.
 Account::~Account() {
-  // id_->save();
-  this->save();
-  // Delete Id
+  delete id_;
 
   //while(!withdrawals_.empty()) {
   //  delete withdrawals_.top();
@@ -47,62 +52,61 @@ Account::~Account() {
 }
 
 bool Account::validate(const std::string& username) {
-  std::ifstream file;
-  std::string line;
-  file.open(userKeyPath_);
-
-  // TODO: O(n) is better because of small file size. What about large?
-  while (!file.eof()) {
-    std::getline(file, line);
-    if (username == line) {
-      return true;
-    }
+  std::string id = Id::find(username, false);
+  if (id != "") {
+    return true;
   }
+  std::cout << "Username does not exists.\n";
   return false;
 }
 
-// TODO: Algorithm could be faster.
-// TODO: Change depending on how data is stored.
 bool Account::authenticate(const std::string& username, const std::string& password) {
   std::ifstream file;
   std::string line;
-  // std::string accountPath = Id::find(username);
-  // file.open(basePath_ + accountPath + infoPath_);
+  std::string accountPath = Id::find(username, true);
+  file.open(basePath_ + infoPath_ + accountPath);
   std::getline(file, line);
-  return Account::find(line, password, "password");
+  bool found = Account::find(line, password, "password");
+  if (found) {
+    return true;
+  }
+  std::cout << "Incorrect password/username.\n";
+  return false;
 }
 
-// TODO: Change depending on how data is stored.
 Account* const Account::load(const std::string& username) {
   std::ifstream file;
   std::string line;
-
   int id;
   std::string password;
   double balance;
   std::string firstName;
   std::string lastName;
 
-  std::string accountPath = Id::find(username);
-  file.open(basePath_ + accountPath + infoPath_);
+  std::string accountPath = Id::find(username, true);
+  file.open(basePath_ + infoPath_ + accountPath);
   std::getline(file, line);
   id = std::stoi(Account::find(line, "id"));
   password = Account::find(line, "password");
   balance = std::stod(Account::find(line, "balance"));
   firstName = Account::find(line, "firstName");
   lastName = Account::find(line, "lastName");
-
   return new Account(id, username, password, balance, firstName, lastName, accountPath);
 }
 
-void Account::create(const std::string& username, const std::string& password) {
-  Account account = Account(username, password);
-  // Account info will be saved by destructor.
+bool Account::create(const std::string& username, const std::string& password) {
+  if (!Account::validate(username)) {
+    Account account = Account(username, password);
+    return true;
+  }
+  std::cout << "Username already exists.\n";
+  return false;
 }
 
 void Account::update(const std::string& firstName, const std::string& lastName) {
   firstName_ = firstName;
   lastName_ = lastName;
+  save();
 }
 
 void Account::update(const std::string& firstName, const std::string& lastName, const std::string& password) {
@@ -110,12 +114,26 @@ void Account::update(const std::string& firstName, const std::string& lastName, 
   update(firstName, lastName);
 }
 
-// TODO: Finish remove
 void Account::remove(const std::string& username) {
-  // Check if username is in userKey first.
-  // std::string accountPath = Id::find(username);
-  // remove username:id from userKey.txt
-  // remove basePath_/accountPath/
+  std::string line;
+  std::string accountPath = Id::find(username, true);
+  std::ifstream file(basePath_ + userKeyPath_);
+  std::ofstream temp(basePath_ + tempPath_);
+  while (!file.eof()) {
+    std::getline(file, line);
+    if (line.find(Account::delimiter_ + username + Account::delimiter_) != std::string::npos) {
+      temp << line;
+    }
+  }
+  file.close();
+  temp.close();
+  char c[] = "Database/userKey.txt";
+  remove(c);
+  std::cout << "here";
+  //rename((basePath_ + tempPath_).c_str(), (basePath_ + userKeyPath_).c_str());
+  //remove(basePath_ + infoPath_ + accountPath);
+  //remove(basePath_ + depositsPath_ + accountPath);
+  //remove(basePath_ + withdrawalsPath_ + accountPath);
 }
 
 void Account::withdraw(const double& amount, const std::string& description,
@@ -129,14 +147,14 @@ void Account::withdraw(const double& amount, const std::string& description,
   }
   balance_ -= amount;
   // withdrawals_.push(new Withdraw(amount, description, date));
-  // this->save();
+  this->save();
 }
 
 void Account::deposit(const double& amount, const std::string& description,
                       const std::string& date) {
   balance_ += amount;
   // deposits_.push(new Deposit(amount, description, date));
-  // this->save();
+  this->save();
 
 }
 
@@ -166,24 +184,46 @@ template <typename T> void Account::get(std::stack<T const*>& stack) {
 }
 
 void Account::save() {
-  std::ofstream file;
+  saveId(basePath_ + Id::idPath_);
+  saveInfo(basePath_ + infoPath_ + accountPath_);
+  saveUserKey(basePath_ + userKeyPath_);
+  // saveWithdrawals(basePath_ + withdrawalPath_ + accountPath_);
+  // saveDeposits(basePath_ + depositsPath_ + accountPath_);
+}
+
+void Account::saveId(const std::string& path) {
+  std::ofstream file(path);
+  file << id_->getId();
+  file.close();
+}
+
+void Account::saveInfo(const std::string& path) {
   std::string entry = "";
-  // std::stack<Withdrawals const*> tempWithdrawals;
-  // std::stack<Withdrawals const*> tempDeposits;
-  
-  // Account Info
-  file.open(basePath_ + infoPath_ + accountPath_);
+  std::ofstream file(path);
   entry += delimiter_;
-  // entry += id_->getId() + delimiter_;
+  entry += std::to_string(id_->getId()) + delimiter_;
   entry += username_ + delimiter_;
+  entry += password_ + delimiter_;
+  entry += std::to_string(balance_) + delimiter_;
   entry += firstName_ + delimiter_;
   entry += lastName_ + delimiter_;
-  entry += balance_ + delimiter_;
   file << entry << std::endl;
   file.close();
+}
 
-  // Withdrawals
-  file.open(basePath_ + withdrawalsPath_ + accountPath_);
+void Account::saveUserKey(const std::string& path) {
+  std::string entry = "";
+  std::ofstream file(path, std::ios::app);
+  entry = delimiter_ + username_ + delimiter_;
+  entry += std::to_string(id_->getId()) + delimiter_;
+  file << entry << std::endl;
+  file.close();
+}
+
+void Account::saveWithdrawals(const std::string& path) {
+  std::ofstream file(path);
+  // std::stack<Withdrawals const*> tempWithdrawals;
+
   //while (!withdrawals_.empty()) {
   //  file << (withdrawals_.top())->getEntry() << std::endl;
   //  tempWithdrawals.push(withdrawals_.top());
@@ -195,9 +235,12 @@ void Account::save() {
   //  tempWithdrawals.pop();
   //}
   file.close();
+}
 
-  // Deposits
-  file.open(basePath_ + depositsPath_ + accountPath_);
+void Account::saveDeposits(const std::string& path) {
+  std::ofstream file(path);
+  // std::stack<Deposits const*> tempDeposits;
+
   //while (!deposits_.empty()) {
   //  file << (deposits_.top())->getEntry() << std::endl;
   //  tempDeposits.push(deposits_.top());
@@ -228,7 +271,6 @@ std::string Account::find(const std::string& line, const std::string& queryType)
   int pos = 0;
   std::string::const_iterator it;
   std::string index = "";
-
   if (queryType == "id") {
     stop = 1;
   }
