@@ -497,10 +497,16 @@ double Ui::getUserInput() {
     std::getline(std::cin, userInput);
     try {
       amount = std::stod(userInput);
+      if (amount < 0) {
+        throw "Please enter a value greater than 0.\n> ";
+      }
       return amount;
     }
-    catch (std::invalid_argument) {
+    catch (const std::invalid_argument& ia) {
       std::cout << "Please enter a double.\n> ";
+    }
+    catch (const std::string& argErr) {
+      std::cout << argErr;
     }
   }
 }

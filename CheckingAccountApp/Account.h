@@ -1,18 +1,18 @@
 #ifndef ACCOUNT_H
 #define ACCOUNT_H
 
-// #include "Withdrawal"
-// #include "Deposit"
-// #include "Id"
+// #include "Withdrawal.h"
+// #include "Deposit.h"
+#include "Id.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <stack>
+#include <iomanip>
 
 class Account {
 private:
   const static std::string userKeyPath_;
-  const static std::string basePath_;
   const static std::string infoPath_;
   const static std::string withdrawalsPath_;
   const static std::string depositsPath_;
@@ -24,11 +24,13 @@ private:
   std::string lastName_;
   std::string username_;
   std::string password_;
-  // std::stack<Withdrawal>* withdrawals_;
-  // std::stack<Deposit>* deposits_;
+  // std::stack<Withdrawal const*> withdrawals_;
+  // std::stack<Deposit const*> deposits_;
   double balance_;
 
 public:
+  const static std::string basePath_;
+  const static std::string userIdPath_;
 
   // Used for creating output file and parsing it.
   const static char delimiter_;
@@ -44,11 +46,11 @@ public:
   // Used by the load method to create a new Account object.
   // Arguments: id, username, password, balance, firstName, lastName.
   Account(const int&, const std::string&, const std::string&, const double&,
-          const std::string&, const std::string&);
+          const std::string&, const std::string&, const std::string&);
 
   // Update username:id list
-  // Saves all account information in basePath_/accountPath_/
-  // Saves to accountInfo.txt, withdrawals.txt, and deposits.txt
+  // Saves all account information in basePath_/
+  // Saves to accountInfo/, withdrawals/, and deposits/
   ~Account();
 
   //////////
@@ -97,6 +99,10 @@ public:
   // Adjusts balance and add to deposits.txt.
   void deposit(const double&, const std::string&, const std::string&);
 
+  // Write data to basePath/
+  // accountInfo/, withdrawals/, and deposits/
+  void save();
+
   //////////
   // Getter functions
   /////////////////////
@@ -104,6 +110,7 @@ public:
   std::string getUsername() { return username_; }
   void getWithdrawals();
   void getDeposits();
+  template <typename T> void get(std::stack<T const*>&);
   void getBalance();
 
   //////////
