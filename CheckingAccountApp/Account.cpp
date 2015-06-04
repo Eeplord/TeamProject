@@ -18,7 +18,7 @@ Account::Account(const std::string& username, const std::string& password)
   balance_ = 0;
   firstName_ = "";
   lastName_ = "";
-  save();
+  save(true);
 
   // withdrawals_ = Withdrawal::load(accountPath_);
   // deposits_ = Deposits::load(accountPath_);
@@ -106,7 +106,7 @@ bool Account::create(const std::string& username, const std::string& password) {
 void Account::update(const std::string& firstName, const std::string& lastName) {
   firstName_ = firstName;
   lastName_ = lastName;
-  save();
+  save(false);
 }
 
 void Account::update(const std::string& firstName, const std::string& lastName, const std::string& password) {
@@ -121,19 +121,19 @@ void Account::remove(const std::string& username) {
   std::ofstream temp(basePath_ + tempPath_);
   while (!file.eof()) {
     std::getline(file, line);
-    if (line.find(Account::delimiter_ + username + Account::delimiter_) != std::string::npos) {
-      temp << line;
+    if (line.find(Account::delimiter_ + username + Account::delimiter_) == std::string::npos &&
+        line.length() > 0) {
+      temp << line << std::endl;
     }
   }
   file.close();
   temp.close();
-  char c[] = "Database/userKey.txt";
-  remove(c);
-  std::cout << "here";
-  //rename((basePath_ + tempPath_).c_str(), (basePath_ + userKeyPath_).c_str());
-  //remove(basePath_ + infoPath_ + accountPath);
-  //remove(basePath_ + depositsPath_ + accountPath);
-  //remove(basePath_ + withdrawalsPath_ + accountPath);
+
+  std::remove((basePath_ + userKeyPath_).c_str());
+  std::rename((basePath_ + tempPath_).c_str(), (basePath_ + userKeyPath_).c_str());
+  std::remove((basePath_ + infoPath_ + accountPath).c_str());
+  std::remove((basePath_ + depositsPath_ + accountPath).c_str());
+  std::remove((basePath_ + withdrawalsPath_ + accountPath).c_str());
 }
 
 void Account::withdraw(const double& amount, const std::string& description,
@@ -147,14 +147,14 @@ void Account::withdraw(const double& amount, const std::string& description,
   }
   balance_ -= amount;
   // withdrawals_.push(new Withdraw(amount, description, date));
-  this->save();
+  this->save(false);
 }
 
 void Account::deposit(const double& amount, const std::string& description,
                       const std::string& date) {
   balance_ += amount;
   // deposits_.push(new Deposit(amount, description, date));
-  this->save();
+  this->save(false);
 
 }
 
@@ -183,10 +183,12 @@ template <typename T> void Account::get(std::stack<T const*>& stack) {
   //}
 }
 
-void Account::save() {
-  saveId(basePath_ + Id::idPath_);
+void Account::save(const bool& unique) {
+  if (unique) {
+    saveId(basePath_ + Id::idPath_);
+    saveUserKey(basePath_ + userKeyPath_);
+  }
   saveInfo(basePath_ + infoPath_ + accountPath_);
-  saveUserKey(basePath_ + userKeyPath_);
   // saveWithdrawals(basePath_ + withdrawalPath_ + accountPath_);
   // saveDeposits(basePath_ + depositsPath_ + accountPath_);
 }

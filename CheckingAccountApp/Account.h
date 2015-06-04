@@ -95,7 +95,7 @@ public:
 
   // Write data to basePath/
   // accountInfo/, withdrawals/, and deposits/
-  void save();
+  void save(const bool&);
   void saveId(const std::string&);
   void saveInfo(const std::string&);
   void saveUserKey(const std::string&);
