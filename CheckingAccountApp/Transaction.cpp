@@ -1,7 +1,4 @@
-// Transaction.cpp
-
 #include "stdafx.h"
-#include "Account.h"
 #include "Transaction.h"
 
 Transaction::Transaction(Date *date, double amount, std::string description)
@@ -13,9 +10,10 @@ Transaction::Transaction(Date *date, double amount, std::string description)
 
 std::string Transaction::getEntry()
 {
-	return Account::delimiter_ << date_->getMonth() << date_->getDay() <<
-		date_->getYear() << Account::delimiter_ << amount_ <<
-		Account::delimiter_ << description_ << Account::delimiter_ << std::endl;
+  return Account::delimiter_ + std::to_string(date_->getMonth()) +
+    std::to_string(date_->getDay()) + std::to_string(date_->getYear()) +
+    Account::delimiter_ + std::to_string(amount_) + Account::delimiter_ +
+    description_ + Account::delimiter_ + '\n';
 }
 
 void Transaction::print()

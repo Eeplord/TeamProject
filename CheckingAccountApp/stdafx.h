@@ -20,6 +20,8 @@
 #include "Id.h"
 #include "Account.h"
 #include "Ui.h"
+#include "Date.h"
+#include "Transaction.h"
 // #include "Withdrawal.h"
 // #include "Deposit.h"
 

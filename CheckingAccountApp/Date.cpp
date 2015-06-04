@@ -1,9 +1,5 @@
-//Date.cpp
-
 #include "stdafx.h"
 #include "Date.h"
-
-using namespace std;
 
 Date::Date() //clears date for new date entry
 {
@@ -15,12 +11,12 @@ Date::Date() //clears date for new date entry
 //setDATE
 void Date::setDate()
 {
-	cout << "Day: ";
-	cin >> day_;
-	cout << "Month: ";
-	cin >> month_;
-	cout << "Year: ";
-	cin >> year_;
+	std::cout << "Day: ";
+  std::cin >> day_;
+  std::cout << "Month: ";
+  std::cin >> month_;
+  std::cout << "Year: ";
+  std::cin >> year_;
 }
 
 //getDATE
@@ -36,5 +32,5 @@ int Date::getYear()
 //printDate
 void Date::printDate()
 {
-	cout << day_ << "/" << month_ << "/" << year_;
+  std::cout << day_ << "/" << month_ << "/" << year_;
 }
