@@ -16,6 +16,9 @@
 #include <regex>
 #include <algorithm>
 
+// Remove: If Error.
+#include <windows.h>
+
 #include <stdio.h>
 #include <tchar.h>
 #include "Crypto.h"

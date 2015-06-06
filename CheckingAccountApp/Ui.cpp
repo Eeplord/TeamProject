@@ -372,6 +372,13 @@ std::string Ui::getUserInput(const std::string& query) {
              " and " + std::to_string(PASSWORD_LEN_MAX_) + " characters long.\n> ";
     argErr = "Password cannot contain '" + std::to_string(Account::delimiter_) + "' .\n> ";
     while (true) {
+      // Remove: If Error.
+      HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+      DWORD mode = 0;
+      GetConsoleMode(hStdin, &mode);
+      SetConsoleMode(hStdin, mode & (~ENABLE_ECHO_INPUT));
+      ////////
+
       std::getline(std::cin, userInput);
       len = userInput.length();
       try {
@@ -381,6 +388,11 @@ std::string Ui::getUserInput(const std::string& query) {
         else if (userInput.find(Account::delimiter_) != std::string::npos) {
           throw argErr;
         }
+        // Remove: If Error.
+        SetConsoleMode(hStdin, mode);
+        ////////
+
+        std::cout << std::endl;
         return userInput;
       }
       catch (const std::string& err) {
