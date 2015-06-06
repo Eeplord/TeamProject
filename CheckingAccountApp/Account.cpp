@@ -1,18 +1,26 @@
 #include "stdafx.h"
 #include "Account.h"
 
-// TODO: Replace with correct paths.
 const std::string Account::userKeyPath_ = "userKey.txt";
 const std::string Account::tempPath_ = "temp.txt";
 const std::string Account::basePath_ = "Database/";
 const std::string Account::infoPath_ = "Account_Info/";
 const std::string Account::withdrawalsPath_ = "Withdrawals/";
 const std::string Account::depositsPath_ = "Deposits/";
-
+const std::string Account::cryptoKey_ = "/M7YjY7sUhcdp51TY2jgLNjxa2+yWH7HJZhmvGP"
+                                        "CC3USzP7LpCpqYww1wK7jGE0a7Gz+t5x1rrDVYZ"
+                                        "PI0zcuvH7f/gsLIPMV4jY3fF44mn9XnWcRlcJgo"
+                                        "Wxts0Zzq+177BmCKsLbT9UFlViigKMG8NZZOR9d"
+                                        "RGcF8PBGI1FpJHC5on0E7TJeO1dmjmPpS46r3wj"
+                                        "MdTDsiKBKcVI5KQEWEzg1HquSU4T5JkiKTIJOLm"
+                                        "Jwk0FiI2Ba6Y8o8fGji8ERTWLxr1gGQ2NCIccVt"
+                                        "lhFdztIgsNeHUryARdGJtJGvLDGtQ495PZh2WcE"
+                                        "dyrciqUrGb5f8dlB8yvxZ/dA==";
 const char Account::delimiter_ = ';';
 
 Account::Account(const std::string& username, const std::string& password)
-  : username_(username), password_(password) {
+  : username_(username) {
+  password_ = encrypt(password, cryptoKey_);
   id_ = new Id();
   accountPath_ = id_->getPath();
   balance_ = 0;
@@ -28,10 +36,10 @@ Account::Account(const int& id, const std::string& username,
                  const std::string& password, const double& balance,
                  const std::string& firstName, const std::string& lastName,
                  const std::string& accountPath)
-  : username_(username), password_(password), balance_(balance),
+  : username_(username), balance_(balance),
     firstName_(firstName), lastName_(lastName), accountPath_(accountPath) {
   id_ = new Id(id);
-
+  password_ = encrypt(password, cryptoKey_);
   // withdrawals_ = Withdrawal::load(accountPath_);
   // deposits_ = Deposits::load(accountPath_);
 }
@@ -66,7 +74,8 @@ bool Account::authenticate(const std::string& username, const std::string& passw
   std::string accountPath = Id::find(username, true);
   file.open(basePath_ + infoPath_ + accountPath);
   std::getline(file, line);
-  bool found = Account::find(line, password, "password");
+  std::string decrypted = decrypt(password, cryptoKey_);
+  bool found = Account::find(line, decrypted, "password");
   if (found) {
     return true;
   }
@@ -110,7 +119,7 @@ void Account::update(const std::string& firstName, const std::string& lastName) 
 }
 
 void Account::update(const std::string& firstName, const std::string& lastName, const std::string& password) {
-  password_ = password;
+  password_ = encrypt(password, cryptoKey_);
   update(firstName, lastName);
 }
 
@@ -267,7 +276,6 @@ bool Account::find(const std::string& line, const std::string& query,
   return index == query;
 }
 
-// TODO: Change depending on how data is stored.
 std::string Account::find(const std::string& line, const std::string& queryType) {
   int stop = 0;
   int pos = 0;

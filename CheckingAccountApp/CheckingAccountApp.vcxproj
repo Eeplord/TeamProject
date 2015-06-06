@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Account.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="Crypto.h" />
     <ClInclude Include="Id.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="Main.cpp" />

@@ -22,7 +22,6 @@ void Ui::start() {
       if (username.length() != 0) {
         next = "loadAccount";
       }
-
     }
     else if (next == "deleteAccount") {
       deleteAccount();

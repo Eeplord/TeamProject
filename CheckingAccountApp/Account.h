@@ -9,9 +9,9 @@ private:
   const static std::string withdrawalsPath_;
   const static std::string depositsPath_;
   const static std::string tempPath_;
+  const static std::string cryptoKey_;
 
   std::string accountPath_;
-  
 
   Id* id_;
   std::string firstName_;
@@ -42,9 +42,6 @@ public:
   Account(const int&, const std::string&, const std::string&, const double&,
           const std::string&, const std::string&, const std::string&);
 
-  // Update username:id list
-  // Saves all account information in basePath_/
-  // Saves to accountInfo/, withdrawals/, and deposits/
   ~Account();
 
   //////////
@@ -93,8 +90,9 @@ public:
   // Adjusts balance and add to deposits.txt.
   void deposit(const double&, const std::string&, const std::string&);
 
-  // Write data to basePath/
-  // accountInfo/, withdrawals/, and deposits/
+  // Update username:id list
+  // Saves all account information in basePath_/
+  // Saves to accountInfo_/, withdrawals_/, and deposits_/
   void save(const bool&);
   void saveId(const std::string&);
   void saveInfo(const std::string&);

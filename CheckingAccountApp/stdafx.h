@@ -14,9 +14,11 @@
 #include <iomanip>
 #include <stdexcept>
 #include <regex>
+#include <algorithm>
 
 #include <stdio.h>
 #include <tchar.h>
+#include "Crypto.h"
 #include "Id.h"
 #include "Account.h"
 #include "Ui.h"

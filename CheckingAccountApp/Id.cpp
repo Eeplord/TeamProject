@@ -19,6 +19,11 @@ Id::Id(int id) : id_(id) {
 std::string Id::find(const std::string& username, const bool& path) {
   std::string line;
   std::ifstream file(Account::basePath_ + Account::userKeyPath_);
+  if (!file.is_open()) {
+    std::ofstream out(Account::basePath_ + Account::userKeyPath_);
+    out.close();
+    file.open(Account::basePath_ + Account::userKeyPath_);
+  }
   while (!file.eof()) {
     std::getline(file, line);
     size_t query = line.find(username + Account::delimiter_);

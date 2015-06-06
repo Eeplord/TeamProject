@@ -1,8 +1,6 @@
 #ifndef ID_H
 #define ID_H
 
-#include "stdafx.h"
-
 class Id {
 private:
   static int generateId_;
