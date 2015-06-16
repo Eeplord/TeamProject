@@ -1,16 +1,22 @@
 #include "stdafx.h"
 #include "Id.h"
 
-int Id::generateId_ = 0;
+int Id::generateId_;
 const std::string Id::idPath_ = "id.txt";
 
 Id::Id() {
   std::string line;
   std::ifstream file(Account::basePath_ + Id::idPath_);
-  std::getline(file, line);
-  generateId_ = std::stoi(line);
-  id_ = ++generateId_;
-  file.close();
+  if (file.is_open()) {
+    std::getline(file, line);
+    generateId_ = std::stoi(line);
+    id_ = ++generateId_;
+    file.close();
+  }
+  else {
+    generateId_ = 0;
+    id_ = generateId_;
+  }
 }
 
 Id::Id(int id) : id_(id) {

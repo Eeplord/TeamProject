@@ -1,9 +1,1 @@
-﻿  Transaction.cpp
-  Main.cpp
-  Id.cpp
-  Date.cpp
-  Crypto.cpp
-  Account.cpp
-  Generating Code...
-e:\education\de anza\cis22b\teamproject\checkingaccountapp\account.cpp(316): warning C4715: 'Account::find' : not all control paths return a value
-  CheckingAccountApp.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject\Debug\CheckingAccountApp.exe
+﻿  CheckingAccountApp.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject\Debug\CheckingAccountApp.exe
