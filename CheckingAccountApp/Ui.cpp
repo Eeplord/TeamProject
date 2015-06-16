@@ -380,6 +380,11 @@ std::string Ui::getUserInput(const std::string& query) {
       ////////
 
       std::getline(std::cin, userInput);
+
+      // Remove: If Error.
+      SetConsoleMode(hStdin, mode);
+      ////////
+
       len = userInput.length();
       try {
         if (len < PASSWORD_LEN_MIN_ || len > PASSWORD_LEN_MAX_) {
@@ -388,10 +393,6 @@ std::string Ui::getUserInput(const std::string& query) {
         else if (userInput.find(Account::delimiter_) != std::string::npos) {
           throw argErr;
         }
-        // Remove: If Error.
-        SetConsoleMode(hStdin, mode);
-        ////////
-
         std::cout << std::endl;
         return userInput;
       }

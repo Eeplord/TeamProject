@@ -16,11 +16,9 @@
 #include <regex>
 #include <algorithm>
 
-// Remove: If Error.
+// Remove: If Error, also remove in std::string Ui::getUserInput().
 #include <windows.h>
 
-#include <stdio.h>
-#include <tchar.h>
 #include "Crypto.h"
 #include "Id.h"
 #include "Account.h"
