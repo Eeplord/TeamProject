@@ -83,12 +83,12 @@ public:
   // Make a new withdrawal.
   // Prints error or new balance.
   // Adjusts balance and add to withdrawals.txt.
-  void withdraw(const double&, const std::string&, const std::string&);
+  void withdraw(const double&, const std::string&, Date*);
 
   // Make a new deposit.
   // Prints error or new balance.
   // Adjusts balance and add to deposits.txt.
-  void deposit(const double&, const std::string&, const std::string&);
+  void deposit(const double&, const std::string&, Date*);
 
   // Update username:id list
   // Saves all account information in basePath_/
@@ -105,8 +105,8 @@ public:
   /////////////////////
 
   std::string getUsername() { return username_; }
-  void getWithdrawals();
-  void getDeposits();
+  std::stack<Withdraw> getWithdrawals();
+  std::stack<Deposit> getDeposits();
   template <typename T> void get(std::stack<T const*>&);
   void getBalance();
 

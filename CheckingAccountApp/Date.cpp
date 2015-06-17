@@ -11,7 +11,7 @@ Date::Date() //clears date for new date entry
 //setDATE
 void Date::setDate()
 {
-	std::cout << "Day: ";
+  std::cout << "Day: ";
   std::cin >> day_;
   std::cout << "Month: ";
   std::cin >> month_;

@@ -28,8 +28,8 @@ Account::Account(const std::string& username, const std::string& password)
   lastName_ = "";
   save(true);
 
-  withdrawals_ = Withdrawal::load(accountPath_);
-  deposits_ = Deposits::load(accountPath_);
+  //withdrawals_ = Withdrawal::load(accountPath_);
+  //deposits_ = Deposits::load(accountPath_);
 }
 
 Account::Account(const int& id, const std::string& username,
@@ -40,23 +40,23 @@ Account::Account(const int& id, const std::string& username,
     firstName_(firstName), lastName_(lastName), accountPath_(accountPath) {
   id_ = new Id(id);
   password_ = encrypt(password, cryptoKey_);
-  withdrawals_ = Withdrawal::load(accountPath_);
-  deposits_ = Deposits::load(accountPath_);
+  //withdrawals_ = Withdrawal::load(accountPath_);
+  //deposits_ = Deposits::load(accountPath_);
 }
 
 // TODO: Finish destructor.
 Account::~Account() {
   delete id_;
 
-  while(!withdrawals_.empty()) {
-    delete withdrawals_.top();
-    withdrawals_.pop();
-  }
+  //while(!withdrawals_.empty()) {
+  //  delete withdrawals_.top();
+  //  withdrawals_.pop();
+  //}
 
-  while(!deposits_.empty()) {
-    delete deposits_.top();
-    deposits_.pop();
-  }
+  //while(!deposits_.empty()) {
+  //  delete deposits_.top();
+  //  deposits_.pop();
+  //}
 }
 
 bool Account::validate(const std::string& username) {
@@ -146,7 +146,7 @@ void Account::remove(const std::string& username) {
 }
 
 void Account::withdraw(const double& amount, const std::string& description,
-                       const std::string& date) {
+                       Date* date) {
   if ((balance_ - amount) < 0) {
     getBalance();
     std::cout << "You cannot withdraw $";
@@ -155,24 +155,29 @@ void Account::withdraw(const double& amount, const std::string& description,
     return;
   }
   balance_ -= amount;
-  withdrawals_.push(new Withdraw(amount, description, date));
+
+  Withdraw w(date, amount, description);
+  withdrawals_.push(w);
+
   this->save(false);
 }
 
 void Account::deposit(const double& amount, const std::string& description,
-                      const std::string& date) {
+                      Date* date) {
   balance_ += amount;
-  deposits_.push(new Deposit(amount, description, date));
+
+  Deposit d(date, amount, description);
+  deposits_.push(d);
   this->save(false);
 
 }
 
-void Account::getWithdrawals() {
-  this->get(withdrawals_);
+std::stack<Withdraw> Account::getWithdrawals() {
+   return withdrawals_;
 }
 
-void Account::getDeposits() {
-  this->get(deposits_);
+std::stack<Deposit> Account::getDeposits() {
+  return deposits_;
 }
 
 template <typename T> void Account::get(std::stack<T const*>& stack) {
@@ -198,7 +203,7 @@ void Account::save(const bool& unique) {
     saveUserKey(basePath_ + userKeyPath_);
   }
   saveInfo(basePath_ + infoPath_ + accountPath_);
-   saveWithdrawals(basePath_ + withdrawalPath_ + accountPath_);
+   saveWithdrawals(basePath_ + withdrawalsPath_ + accountPath_);
    saveDeposits(basePath_ + depositsPath_ + accountPath_);
 }
 
@@ -233,10 +238,10 @@ void Account::saveUserKey(const std::string& path) {
 
 void Account::saveWithdrawals(const std::string& path) {
   std::ofstream file(path);
-   std::stack<Withdrawals const*> tempWithdrawals;
+   std::stack<Withdraw> tempWithdrawals;
 
   while (!withdrawals_.empty()) {
-    file << (withdrawals_.top())->getEntry() << std::endl;
+    file << (withdrawals_.top()).getEntry() << std::endl;
     tempWithdrawals.push(withdrawals_.top());
     withdrawals_.pop();
   }
@@ -250,15 +255,15 @@ void Account::saveWithdrawals(const std::string& path) {
 
 void Account::saveDeposits(const std::string& path) {
   std::ofstream file(path);
-   std::stack<Deposits const*> tempDeposits;
+   std::stack<Deposit> tempDeposits;
 
   while (!deposits_.empty()) {
-    file << (deposits_.top())->getEntry() << std::endl;
+    file << (deposits_.top()).getEntry() << std::endl;
     tempDeposits.push(deposits_.top());
     deposits_.pop();
   }
   
-  while (!tempWithdrawals.empty()) {
+  while (!tempDeposits.empty()) {
     deposits_.push(tempDeposits.top());
     tempDeposits.pop();
   }
@@ -298,6 +303,9 @@ std::string Account::find(const std::string& line, const std::string& queryType)
   }
   else if (queryType == "lastName") {
     stop = 6;
+  }
+  else {
+	  stop = 7;
   }
 
   for (it = line.begin(); it < line.end(); ++it) {

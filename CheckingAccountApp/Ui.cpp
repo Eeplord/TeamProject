@@ -280,7 +280,7 @@ void Ui::getDeposits(Account* const& account) {
 void Ui::withdraw(Account* const& account) {
   double amount = 0;
   std::string description = "";
-  std::string date = "";
+  Date* date = new Date();
   std::string polar;
 
   std::cout << "\n***\n";
@@ -302,14 +302,14 @@ void Ui::withdraw(Account* const& account) {
   description = getUserInput("description");
 
   std::cout << "Please enter the date.\n";
-  date = getUserInput("date");
+  date->setDate();
   account->withdraw(amount, description, date);
 }
 
 void Ui::deposit(Account* const& account) {
   double amount = 0;
   std::string description = "";
-  std::string date = "";
+  Date* date = new Date();
   std::string polar;
 
   std::cout << "\n***\n";
@@ -331,7 +331,7 @@ void Ui::deposit(Account* const& account) {
   description = getUserInput("description");
 
   std::cout << "Please enter the date.\n";
-  date = getUserInput("date");
+  date->setDate();
   account->deposit(amount, description, date);
 }
 
