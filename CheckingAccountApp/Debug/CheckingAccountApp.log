@@ -1,1 +1,139 @@
-﻿  CheckingAccountApp.vcxproj -> E:\Education\De Anza\CIS22B\TeamProject\Debug\CheckingAccountApp.exe
+﻿Build started 6/16/2015 4:59:24 PM.
+     1>Project "C:\Users\Eeplord\Source\Repos\App\CheckingAccountApp\CheckingAccountApp.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\CheckingAccountApp.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\CheckingAccountApp.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Account.cpp Crypto.cpp Date.cpp Deposit.cpp Id.cpp Main.cpp Transaction.cpp Ui.cpp Withdraw.cpp
+         Withdraw.cpp
+         Transaction.cpp
+         Deposit.cpp
+         Account.cpp
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(31): error C2653: 'Withdrawal' : is not a class or namespace name
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(31): error C2679: binary '=' : no operator found which takes a right-hand operand of type 'Account *' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(99): could be 'std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &&)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(41): or       'std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(const std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+                 while trying to match the argument list '(std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>>, Account *)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(32): error C2653: 'Deposits' : is not a class or namespace name
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(32): error C2679: binary '=' : no operator found which takes a right-hand operand of type 'Account *' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(99): could be 'std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &&)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(41): or       'std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(const std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+                 while trying to match the argument list '(std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>>, Account *)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(43): error C2653: 'Withdrawal' : is not a class or namespace name
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(43): error C2679: binary '=' : no operator found which takes a right-hand operand of type 'Account *' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(99): could be 'std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &&)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(41): or       'std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(const std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+                 while trying to match the argument list '(std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>>, Account *)'
+                 with
+                 [
+                     _Ty=Withdraw
+                 ]
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(44): error C2653: 'Deposits' : is not a class or namespace name
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(44): error C2679: binary '=' : no operator found which takes a right-hand operand of type 'Account *' (or there is no acceptable conversion)
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(99): could be 'std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &&)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stack(41): or       'std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>> &std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>>::operator =(const std::stack<_Ty,std::deque<_Ty,std::allocator<_Ty>>> &)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+                 while trying to match the argument list '(std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>>, Account *)'
+                 with
+                 [
+                     _Ty=Deposit
+                 ]
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(52): error C2440: 'delete' : cannot convert from 'Withdraw' to 'void*'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(57): error C2440: 'delete' : cannot convert from 'Deposit' to 'void*'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(158): error C2664: 'Withdraw::Withdraw(const Withdraw &)' : cannot convert argument 1 from 'const double' to 'Date *'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(165): error C2664: 'Deposit::Deposit(const Deposit &)' : cannot convert argument 1 from 'const double' to 'Date *'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(171): error C2784: 'void Account::get(std::stack<const T*,std::deque<_Ty,std::allocator<_Ty>>> &)' : could not deduce template argument for 'std::stack<const T*,std::deque<_Ty,std::allocator<_Ty>>> &' from 'std::stack<Withdraw,std::deque<_Ty,std::allocator<_Ty>>>'
+                 with
+                 [
+                     _Ty=const T *
+                 ]
+                 and
+                 [
+                     _Ty=const T *
+                 ]
+                 and
+                 [
+                     _Ty=Withdraw
+                 ]
+                 c:\users\eeplord\source\repos\app\checkingaccountapp\account.h(110) : see declaration of 'Account::get'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(175): error C2784: 'void Account::get(std::stack<const T*,std::deque<_Ty,std::allocator<_Ty>>> &)' : could not deduce template argument for 'std::stack<const T*,std::deque<_Ty,std::allocator<_Ty>>> &' from 'std::stack<Deposit,std::deque<_Ty,std::allocator<_Ty>>>'
+                 with
+                 [
+                     _Ty=const T *
+                 ]
+                 and
+                 [
+                     _Ty=const T *
+                 ]
+                 and
+                 [
+                     _Ty=Deposit
+                 ]
+                 c:\users\eeplord\source\repos\app\checkingaccountapp\account.h(110) : see declaration of 'Account::get'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(201): error C2065: 'withdrawalPath_' : undeclared identifier
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(236): error C2065: 'Withdrawals' : undeclared identifier
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(236): error C2143: syntax error : missing ',' before 'const'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(236): error C2923: 'std::stack' : 'Withdrawals' is not a valid template type argument for parameter '_Ty'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(236): error C2133: 'tempWithdrawals' : unknown size
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(236): error C2512: 'std::stack' : no appropriate default constructor available
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(239): error C2819: type 'Withdraw' does not have an overloaded member 'operator ->'
+                 c:\users\eeplord\source\repos\app\checkingaccountapp\withdraw.h(4) : see declaration of 'Withdraw'
+                 did you intend to use '.' instead?
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(239): error C2232: '->Withdraw::getEntry' : left operand has 'class' type, use '.'
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(240): error C2663: 'std::stack<_Ty,_Container>::push' : 2 overloads have no legal conversion for 'this' pointer
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(244): error C2662: 'bool std::stack<_Ty,_Container>::empty(void) const' : cannot convert 'this' pointer from 'std::stack' to 'const std::stack<_Ty,_Container> &'
+                 Reason: cannot convert from 'std::stack' to 'const std::stack<_Ty,_Container>'
+                 Conversion requires a second user-defined-conversion operator or constructor
+     1>c:\users\eeplord\source\repos\app\checkingaccountapp\account.cpp(244): fatal error C1903: unable to recover from previous error(s); stopping compilation
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         Ui.cpp
+         Main.cpp
+         Id.cpp
+         Date.cpp
+         Crypto.cpp
+     1>Done Building Project "C:\Users\Eeplord\Source\Repos\App\CheckingAccountApp\CheckingAccountApp.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.01

@@ -18,8 +18,8 @@ private:
   std::string lastName_;
   std::string username_;
   std::string password_;
-  // std::stack<Withdrawal const*> withdrawals_;
-  // std::stack<Deposit const*> deposits_;
+  std::stack <Withdraw> withdrawals_;
+  std::stack <Deposit> deposits_;
   double balance_;
 
 public:

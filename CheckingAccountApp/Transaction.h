@@ -9,7 +9,7 @@ public:
 	std::string getEntry();
 	void print();
 
-private:
+protected:
 
 	Date *date_;
 	double amount_;
