@@ -1,19 +1,18 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
-class Transaction
-{
+class Transaction {
 public:
+  Transaction();
+  Transaction(double, std::string, Date*);
+  std::string getEntry();
+  void print();
+  template <typename T> static std::stack<T*> load(std::string);
 
-	Transaction(Date *date, double amount, std::string description);
-	std::string getEntry();
-	void print();
-
-private:
-
-	Date *date_;
-	double amount_;
-	std::string description_;
+protected:
+  Date* date_;
+  double amount_;
+  std::string description_;
 };
 
 #endif

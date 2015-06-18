@@ -19,13 +19,13 @@
 // Remove: If Error, also remove in std::string Ui::getUserInput().
 #include <windows.h>
 
+#include "Date.h"
+#include "Transaction.h"
+#include "Withdrawal.h"
+#include "Deposit.h"
 #include "Crypto.h"
 #include "Id.h"
 #include "Account.h"
 #include "Ui.h"
-#include "Date.h"
-#include "Transaction.h"
-// #include "Withdrawal.h"
-// #include "Deposit.h"
 
 // TODO: reference additional headers your program requires here

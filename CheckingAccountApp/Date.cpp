@@ -8,6 +8,10 @@ Date::Date() //clears date for new date entry
 	year_ = 0;
 }
 
+Date::Date(int month, int day, int year)
+: month_(month), day_(day), year_(year) {
+}
+
 //setDATE
 void Date::setDate()
 {
@@ -28,9 +32,3 @@ int Date::getMonth()
 
 int Date::getYear()
 {return year_;}
-
-//printDate
-void Date::printDate()
-{
-  std::cout << day_ << "/" << month_ << "/" << year_;
-}

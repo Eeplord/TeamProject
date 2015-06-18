@@ -280,7 +280,7 @@ void Ui::getDeposits(Account* const& account) {
 void Ui::withdraw(Account* const& account) {
   double amount = 0;
   std::string description = "";
-  std::string date = "";
+  Date* date = nullptr;
   std::string polar;
 
   std::cout << "\n***\n";
@@ -294,6 +294,7 @@ void Ui::withdraw(Account* const& account) {
   polar = getUserInput("polar");
 
   if (polar == "no") {
+    date = new Date();
     account->withdraw(amount, description, date);
     return;
   }
@@ -302,14 +303,14 @@ void Ui::withdraw(Account* const& account) {
   description = getUserInput("description");
 
   std::cout << "Please enter the date.\n";
-  date = getUserInput("date");
+  date = getDate();
   account->withdraw(amount, description, date);
 }
 
 void Ui::deposit(Account* const& account) {
   double amount = 0;
   std::string description = "";
-  std::string date = "";
+  Date* date = nullptr;
   std::string polar;
 
   std::cout << "\n***\n";
@@ -323,6 +324,7 @@ void Ui::deposit(Account* const& account) {
   polar = getUserInput("polar");
 
   if (polar == "no") {
+    date = new Date();
     account->deposit(amount, description, date);
     return;
   }
@@ -331,7 +333,7 @@ void Ui::deposit(Account* const& account) {
   description = getUserInput("description");
 
   std::cout << "Please enter the date.\n";
-  date = getUserInput("date");
+  date = getDate();
   account->deposit(amount, description, date);
 }
 
@@ -419,45 +421,6 @@ std::string Ui::getUserInput(const std::string& query) {
     }
   }
 
-  else if (query == "date") {
-    std::regex notNumbers("[^[:num:]]");
-    int month;
-    int day;
-    int year;
-
-    argErr = "Date must be in a MMDDYYYY format.\n> ";
-    lenErr = argErr;
-
-    while (true) {
-      std::getline(std::cin, userInput);
-      len = userInput.length();
-      try {
-        if (len != DATE_LEN_) {
-          throw lenErr;
-        }
-        else if (std::regex_search(userInput, notNumbers)) {
-          throw argErr;
-        }
-        month = std::stoi(userInput.substr(0, 2));
-        day = std::stoi(userInput.substr(2, 2));
-        year = std::stoi(userInput.substr(4, 4));
-
-        if (month <= 0 || month > 12) {
-          throw argErr;
-        }
-        else if (day <= 0 || day > 31) {
-          throw argErr;
-        }
-        else if (year <= 2014) {
-          throw argErr;
-        }
-      }
-      catch (const std::string& err) {
-        std::cout << err;
-      }
-    }
-  }
-
   else if (query == "polar") {
     lenErr = "Please enter Y/N (not case sensitive).\n> ";
     argErr = lenErr;
@@ -530,6 +493,52 @@ double Ui::getUserInput() {
     }
     catch (const std::string& argErr) {
       std::cout << argErr;
+    }
+  }
+}
+
+Date* Ui::getDate() {
+  std::regex notNumbers("[^[:num:]]");
+  std::string argErr;
+  std::string lenErr;
+  std::string userInput;
+  int len;
+  int month;
+  int day;
+  int year;
+
+  argErr = "Date must be in a MMDDYYYY format.\n> ";
+  lenErr = argErr;
+
+  while (true) {
+    std::getline(std::cin, userInput);
+    len = userInput.length();
+    try {
+      if (len != DATE_LEN_) {
+        throw lenErr;
+      }
+      else if (std::regex_search(userInput, notNumbers)) {
+        throw argErr;
+      }
+      month = std::stoi(userInput.substr(0, 2));
+      day = std::stoi(userInput.substr(2, 2));
+      year = std::stoi(userInput.substr(4, 4));
+
+      if (month <= 0 || month > 12) {
+        throw argErr;
+      }
+      else if (day <= 0 || day > 31) {
+        throw argErr;
+      }
+      else if (year <= 2014) {
+        throw argErr;
+      }
+      else {
+        return new Date(month, day, year);
+      }
+    }
+    catch (const std::string& err) {
+      std::cout << err;
     }
   }
 }

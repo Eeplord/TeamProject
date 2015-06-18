@@ -10,6 +10,7 @@ private:
 
 public:
 	Date(); //constructor will clear date entries to enter a new date
+  Date(int, int, int);
 	void setDate(); //gets date from user
 	int getDay();
 	int getMonth();

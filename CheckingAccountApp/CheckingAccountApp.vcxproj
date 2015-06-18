@@ -82,16 +82,19 @@
     <ClInclude Include="Account.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Crypto.h" />
+    <ClInclude Include="Deposit.h" />
     <ClInclude Include="Id.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="Ui.h" />
+    <ClInclude Include="Withdrawal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="Deposit.cpp" />
     <ClCompile Include="Id.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +103,7 @@
     </ClCompile>
     <ClCompile Include="Transaction.cpp" />
     <ClCompile Include="Ui.cpp" />
+    <ClCompile Include="Withdrawal.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

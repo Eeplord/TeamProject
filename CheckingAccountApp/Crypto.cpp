@@ -9,8 +9,8 @@ std::string encrypt(const std::string& input, const std::string& key) {
   while (encrypted.length() < 500 / (encrypted.length() + 1)) {
     for (std::string::size_type i = 0; i < input.length(); ++i) {
       encrypted += input[i] ^ dynamicKey[i % dynamicKey.length()];
-      if (encrypted.back() == Account::delimiter_) {
-        encrypted.back() = ',';
+      if (!isalnum(encrypted.back())) {
+        encrypted.back() = 'a';
       }
     }
     int i = 0;

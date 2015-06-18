@@ -62,6 +62,7 @@ public:
   double Ui::getUserInput();
 	int getUserInput(const int&);
 	std::string getUserInput(const std::string&);
+  Date* getDate();
 };
 
 #endif

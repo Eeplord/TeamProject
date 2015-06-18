@@ -27,9 +27,8 @@ Account::Account(const std::string& username, const std::string& password)
   firstName_ = "";
   lastName_ = "";
   save(true);
-
-  // withdrawals_ = Withdrawal::load(accountPath_);
-  // deposits_ = Deposits::load(accountPath_);
+  //withdrawals_ = Transaction::load<Withdrawal>(basePath_ + withdrawalsPath_ + accountPath_);
+  //deposits_ = Transaction::load<Deposit>(basePath_ + depositsPath_ + accountPath_);
 }
 
 Account::Account(const int& id, const std::string& username,
@@ -40,23 +39,22 @@ Account::Account(const int& id, const std::string& username,
     firstName_(firstName), lastName_(lastName), accountPath_(accountPath) {
   id_ = new Id(id);
   password_ = encrypt(password, cryptoKey_);
-  // withdrawals_ = Withdrawal::load(accountPath_);
-  // deposits_ = Deposits::load(accountPath_);
+  //withdrawals_ = Transaction::load<Withdrawal>(basePath_ + withdrawalsPath_ + accountPath_);
+  //deposits_ = Transaction::load<Deposit>(basePath_ + depositsPath_ + accountPath_);
 }
 
-// TODO: Finish destructor.
 Account::~Account() {
   delete id_;
 
-  //while(!withdrawals_.empty()) {
-  //  delete withdrawals_.top();
-  //  withdrawals_.pop();
-  //}
+  while(!withdrawals_.empty()) {
+    delete withdrawals_.top();
+    withdrawals_.pop();
+  }
 
-  //while(!deposits_.empty()) {
-  //  delete deposits_.top();
-  //  deposits_.pop();
-  //}
+  while(!deposits_.empty()) {
+    delete deposits_.top();
+    deposits_.pop();
+  }
 }
 
 bool Account::validate(const std::string& username) {
@@ -146,7 +144,7 @@ void Account::remove(const std::string& username) {
 }
 
 void Account::withdraw(const double& amount, const std::string& description,
-                       const std::string& date) {
+                       Date* date) {
   if ((balance_ - amount) < 0) {
     getBalance();
     std::cout << "You cannot withdraw $";
@@ -155,41 +153,41 @@ void Account::withdraw(const double& amount, const std::string& description,
     return;
   }
   balance_ -= amount;
-  // withdrawals_.push(new Withdraw(amount, description, date));
+  withdrawals_.push(new Withdrawal(amount, description, date));
   this->save(false);
 }
 
 void Account::deposit(const double& amount, const std::string& description,
-                      const std::string& date) {
+                      Date* date) {
   balance_ += amount;
-  // deposits_.push(new Deposit(amount, description, date));
+  deposits_.push(new Deposit(amount, description, date));
   this->save(false);
 
 }
 
 void Account::getWithdrawals() {
-  // this->get(withdrawals_);
+  this->get<Withdrawal>(withdrawals_);
 }
 
 void Account::getDeposits() {
-  // this->get(deposits_);
+  this->get<Deposit>(deposits_);
 }
 
-template <typename T> void Account::get(std::stack<T const*>& stack) {
-  //std::stack<T const*> bucket;
-  //T const* temp;
-  //while (!stack.empty()) {
-  //  temp = stack.top();
-  //  temp->print();
-  //  bucket.push(temp);
-  //  stack.pop();
-  //}
-  //
-  //while (!bucket.empty()) {
-  //  temp = bucket.top();
-  //  stack.push(temp);
-  //  bucket.pop();
-  //}
+template <typename T> void Account::get(std::stack<T*> stack) {
+  std::stack<T*> bucket;
+  T* temp;
+  while (!stack.empty()) {
+    temp = stack.top();
+    temp->print();
+    bucket.push(temp);
+    stack.pop();
+  }
+  
+  while (!bucket.empty()) {
+    temp = bucket.top();
+    stack.push(temp);
+    bucket.pop();
+  }
 }
 
 void Account::save(const bool& unique) {
@@ -198,8 +196,8 @@ void Account::save(const bool& unique) {
     saveUserKey(basePath_ + userKeyPath_);
   }
   saveInfo(basePath_ + infoPath_ + accountPath_);
-  // saveWithdrawals(basePath_ + withdrawalPath_ + accountPath_);
-  // saveDeposits(basePath_ + depositsPath_ + accountPath_);
+  saveWithdrawals(basePath_ + withdrawalsPath_ + accountPath_);
+  saveDeposits(basePath_ + depositsPath_ + accountPath_);
 }
 
 void Account::saveId(const std::string& path) {
@@ -233,35 +231,35 @@ void Account::saveUserKey(const std::string& path) {
 
 void Account::saveWithdrawals(const std::string& path) {
   std::ofstream file(path);
-  // std::stack<Withdrawals const*> tempWithdrawals;
+   std::stack<Withdrawal*> tempWithdrawals;
 
-  //while (!withdrawals_.empty()) {
-  //  file << (withdrawals_.top())->getEntry() << std::endl;
-  //  tempWithdrawals.push(withdrawals_.top());
-  //  withdrawals_.pop();
-  //}
-  //
-  //while (!tempWithdrawals.empty()) {
-  //  withdrawals_.push(tempWithdrawals.top());
-  //  tempWithdrawals.pop();
-  //}
+  while (!withdrawals_.empty()) {
+    file << withdrawals_.top()->getEntry() << std::endl;
+    tempWithdrawals.push(withdrawals_.top());
+    withdrawals_.pop();
+  }
+  
+  while (!tempWithdrawals.empty()) {
+    withdrawals_.push(tempWithdrawals.top());
+    tempWithdrawals.pop();
+  }
   file.close();
 }
 
 void Account::saveDeposits(const std::string& path) {
   std::ofstream file(path);
-  // std::stack<Deposits const*> tempDeposits;
+   std::stack<Deposit*> tempDeposits;
 
-  //while (!deposits_.empty()) {
-  //  file << (deposits_.top())->getEntry() << std::endl;
-  //  tempDeposits.push(deposits_.top());
-  //  deposits_.pop();
-  //}
-  //
-  //while (!tempWithdrawals.empty()) {
-  //  deposits_.push(tempDeposits.top());
-  //  tempDeposits.pop();
-  //}
+  while (!deposits_.empty()) {
+    file << deposits_.top()->getEntry() << std::endl;
+    tempDeposits.push(deposits_.top());
+    deposits_.pop();
+  }
+  
+  while (!tempDeposits.empty()) {
+    deposits_.push(tempDeposits.top());
+    tempDeposits.pop();
+  }
   file.close();
 }
 
